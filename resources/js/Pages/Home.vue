@@ -1,4 +1,5 @@
 <template>
+    <Head title="Home" />
     <div class="flex flex-col items-center justify-center w-screen h-screen">
         <div class="flex flex-col justify-center items-center">
             <div class="p-5">
@@ -23,10 +24,11 @@
 </template>
 
 <script>
-import { Link } from "@inertiajs/vue3";
+import { Head, Link } from "@inertiajs/vue3";
 import { ref } from "vue";
 export default {
     components: {
+        Head,
         Link,
     },
     setup() {
