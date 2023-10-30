@@ -8,6 +8,7 @@ export default {
         "./storage/framework/views/*.php",
         "./resources/views/**/*.blade.php",
         "./resources/js/**/*.vue",
+        // "./node_modules/flowbite/**/*.js",
     ],
     daisyui: {
         themes: ["forest"],
@@ -21,5 +22,9 @@ export default {
         },
     },
 
-    plugins: [forms, require("daisyui")],
+    plugins: [
+        forms,
+        require("daisyui"),
+        // require("flowbite/plugin")
+    ],
 };
