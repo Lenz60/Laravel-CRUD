@@ -11,6 +11,8 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
+            <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/datepicker.min.js"></script> -->
+            <!-- <script src="../../node_modules/flowbite/dist/flowbite.min.js"></script> -->
         @routes
         @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
         @inertiaHead
@@ -18,4 +20,6 @@
     <body class="font-sans antialiased" data-theme="forest">
         @inertia
     </body>
+
+
 </html>

@@ -33,7 +33,7 @@ const submit = () => {
 </script>
 
 <template>
-    <GuestLayout class="w-full border-2 border-green-300">
+    <GuestLayout class="w-full">
         <Head title="Log in" />
 
         <div class="text-gray-800 text-center p-5 font-bold font-sans text-2xl">
