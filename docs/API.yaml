@@ -1,0 +1,454 @@
+openapi: 3.0.3
+info:
+  title: API For Laravel CRUD
+  description: |-
+    API For Laravel CRUD
+  version: "1.0"
+tags:
+  - name: Login Admin
+    description: Login Page for Admin
+  - name: Admin Dashboard
+    description: Admin Dashboard
+  - name: Admin Manage
+    description: Manage user data from admin dashboard
+  - name: Login Member
+    description: Login Page for Member
+  - name: Member Dashboard
+    description: Member Dashboard
+paths:
+  /admin:
+    get:
+      tags:
+        - Login Admin
+      summary: Login page for admin
+      description: Render a login page for administrator
+      operationId: loginPageAdmin
+      responses:
+        "200":
+          description: rendered login page
+          content:
+        "400":
+          description: failed login
+    post:
+      tags:
+        - Login Admin
+      summary: Login admin
+      description: Login admin by passing username and password
+      operationId: loginAdmin
+      parameters:
+        - name: username
+          in: query
+          description: valid username for login as admin
+          required: true
+          explode: false
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: valid password for login as admin
+          required: true
+          explode: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Login successfull
+        "405":
+          description: Invalid input
+  /admin/dashboard:
+    get:
+      tags:
+        - Admin Dashboard
+      summary: Dashboard page for admin
+      description: Render a dashboard page for administrator displaying all admin account
+      operationId: dashboardAdmin
+      responses:
+        "200":
+          description: Successful rendered admin dashboard
+          content:
+        "400":
+          description: Failed rendered admin dashboard
+    put:
+      tags:
+        - Admin Dashboard
+      summary: Update admin
+      description: Update an existing admin by Id
+      operationId: updateAdmin
+      parameters:
+        - name: id
+          in: query
+          description: id for updating admin data
+          required: true
+          explode: false
+          schema:
+            type: integer
+        - name: username
+          in: query
+          description: valid username for  admin
+          required: false
+          explode: false
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: valid name for admin
+          required: false
+          explode: false
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: valid password for admin
+          required: false
+          explode: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Admin account successfully changed
+        "400":
+          description: Invalid ID
+        "404":
+          description: ID not found
+        "405":
+          description: Validation exception
+    post:
+      tags:
+        - Admin Dashboard
+      summary: Add a new Admin
+      description: Add a new Admin
+      operationId: createNewAdmin
+      parameters:
+        - name: username
+          in: query
+          description: valid username for login as admin
+          required: true
+          explode: false
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: valid name for login as admin
+          required: true
+          explode: false
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: valid password for login as admin
+          required: true
+          explode: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Admin account added
+        "405":
+          description: Invalid input
+    delete:
+      tags:
+        - Admin Dashboard
+      summary: Deletes a admin account
+      description: delete a admin account
+      operationId: deleteAdmin
+      parameters:
+        - name: adminId
+          in: path
+          description: Admin id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "400":
+          description: Invalid admin id
+  /admin/manage:
+    get:
+      tags:
+        - Admin Manage
+      summary: Manage member data from admin dashboard
+      description: Render a dashboard page for administrator to manage Member data and display all member data
+      operationId: adminManageDashboard
+      responses:
+        "200":
+          description: Successfull rendered admin manage dashboard
+          content:
+        "400":
+          description: Failed rendered admin manage dashboard
+    put:
+      tags:
+        - Admin Manage
+      summary: Update member data from admin dashboard
+      description: Update an existing member data by Email user from admin dashboard
+      operationId: adminManageEdit
+      parameters:
+        - name: email
+          in: query
+          description: valid email for member
+          required: true
+          explode: false
+          schema:
+            type: string
+        - name: KTP
+          in: query
+          description: valid KTP for member
+          required: false
+          explode: false
+          schema:
+            type: number
+        - name: name
+          in: query
+          description: valid name for member
+          required: false
+          explode: false
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: valid password for member
+          required: false
+          explode: false
+          schema:
+            type: string
+        - name: telephone
+          in: query
+          description: valid telephone number for member
+          required: false
+          explode: false
+          schema:
+            type: number
+        - name: date of birth
+          in: query
+          description: valid date of birth for member
+          required: false
+          explode: false
+          schema:
+            type: string
+        - name: gender
+          in: query
+          description: valid gender for member
+          required: false
+          explode: false
+          schema:
+            type: string
+            default: male
+            enum:
+              - male
+              - female
+      responses:
+        "200":
+          description: Successfuly update member data
+        "400":
+          description: Invalid ID
+        "404":
+          description: ID not found
+        "405":
+          description: Validation exception
+  /login:
+    get:
+      tags:
+        - Login Member
+      summary: Login page for member
+      description: Render a login page for member
+      operationId: loginPageMember
+      parameters:
+        - name: email
+          in: query
+          description: valid email for login as admin
+          required: true
+          explode: false
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: valid password for login as admin
+          required: true
+          explode: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successfully rendered member login page
+          content:
+        "400":
+          description: Failed rendered member login page
+    post:
+      tags:
+        - Login Member
+      summary: Login Member
+      description: Add a new Member
+      operationId: createMember
+      parameters:
+        - name: email
+          in: query
+          description: valid email for login as member
+          required: true
+          explode: false
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: valid name for login as member
+          required: true
+          explode: false
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: valid password for login as member
+          required: true
+          explode: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successfully login as member
+        "405":
+          description: Failed login as member
+  /dashboard:
+    get:
+      tags:
+        - Member Dashboard
+      summary: Dashboard page for member
+      description: Render a dashboard page for member displaying information about member account
+      operationId: dashboardMember
+      responses:
+        "200":
+          description: Successfully rendered member dashboard
+          content:
+        "400":
+          description: Failed rendered member dashboard
+  /dashboard/edit:
+    put:
+      tags:
+        - Member Dashboard
+      summary: Update member data from member dashboard
+      description: Update an existing member data by email
+      operationId: updateMember
+      parameters:
+        - name: email
+          in: query
+          description: valid email for member
+          required: true
+          explode: false
+          schema:
+            type: string
+        - name: KTP
+          in: query
+          description: valid KTP for member
+          required: false
+          explode: false
+          schema:
+            type: number
+        - name: name
+          in: query
+          description: valid name for member
+          required: false
+          explode: false
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: valid password for member
+          required: false
+          explode: false
+          schema:
+            type: string
+        - name: telephone
+          in: query
+          description: valid telephone number for member
+          required: false
+          explode: false
+          schema:
+            type: number
+        - name: date of birth
+          in: query
+          description: valid date of birth for member
+          required: false
+          explode: false
+          schema:
+            type: string
+        - name: gender
+          in: query
+          description: valid gender for member
+          required: false
+          explode: false
+          schema:
+            type: string
+            default: male
+            enum:
+              - male
+              - female
+      responses:
+        "200":
+          description: Update data success
+        "400":
+          description: Invalid ID
+        "404":
+          description: ID not found
+        "405":
+          description: Validation exception
+    delete:
+      tags:
+        - Member Dashboard
+      summary: Deletes a member account
+      description: delete a member account
+      operationId: deleteMember
+      parameters:
+        - name: email
+          in: path
+          description: Member id to delete
+          required: true
+          schema:
+            type: string
+            format: email
+      responses:
+        "400":
+          description: Invalid email
+
+components:
+  schemas:
+    Member:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: asd@gmail.com
+        KTP:
+          type: number
+          format: float
+          example: 340128723798
+        name:
+          type: string
+          format: string
+        password:
+          type: string
+          format: string
+        telephone:
+          type: number
+          format: int64
+        date of birth:
+          type: string
+          format: date-time
+        gender:
+          type: string
+          format: string
+          example: male, female
+      xml:
+        name: member
+    Admin:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 100000
+        username:
+          type: string
+          example: lmao
+        password:
+          type: string
+          example: pa$$word
+      xml:
+        name: Admin
