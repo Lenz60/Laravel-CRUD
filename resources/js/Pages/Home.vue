@@ -1,24 +1,30 @@
 <template>
-    <div>
-        <div class="flex flex-col border-2 border-yellow-500">
-            <div>
-                <p>
-                    The significance of such problems is so obvious that social
-                    economic development represents an interesting experiment of
-                    economic practicability of decisions made. Likewise new
-                    model of the organisational activity plays an important part
-                    in the formation of the step-by-step consistent development
-                    of the society. Likewise new model of the organisational
-                    activity requires the clarification of further ways of
-                    development.
-                </p>
+    <div class="flex flex-col items-center justify-center w-screen h-screen">
+        <div class="flex flex-col justify-center items-center">
+            <div class="p-5">
+                <Link href="/login">
+                    <button class="btn btn-primary btn-outline rounded-md">
+                        Member Login
+                    </button>
+                </Link>
+            </div>
+            <div class="p-5">
+                <Link href="/admin">
+                    <button class="btn btn-secondary btn-outline rounded-md">
+                        Admin Login
+                    </button>
+                </Link>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import { Link } from "@inertiajs/vue3";
 export default {
+    components: {
+        Link,
+    },
     setup() {
         return {};
     },
