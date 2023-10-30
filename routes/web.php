@@ -28,10 +28,14 @@ Route::get('/home', function () {
     return Inertia::render('Home', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
+        'isAdmin' => Route::has('admin'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
+
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
