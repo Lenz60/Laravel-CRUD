@@ -165,26 +165,26 @@ const submit = () => {
             <div class="mt-4">
                 <InputLabel for="gender" value="Jenis Kelamin" />
 
-                <TextInput
+                <select
                     id="gender"
-                    type="text"
-                    class="mt-1 block w-full"
+                    name="gender"
                     v-model="form.gender"
                     required
-                    autofocus
-                    autocomplete="gender"
-                />
-
+                    class="mt-1 block w-full border-gray-300 text-gray-600 focus:border-accent focus:ring-accent rounded-md shadow-sm"
+                >
+                    <option value="Laki-laki">Laki-laki</option>
+                    <option value="Perempuan">Perempuan</option>
+                </select>
                 <InputError class="mt-2" :message="form.errors.gender" />
             </div>
 
             <div class="mt-4">
                 <InputLabel for="avatar" value="Foto Profil" />
 
-                <TextInput
+                <input
                     id="avatar"
                     type="file"
-                    class="mt-1 block w-ful"
+                    class="mt-1 block w-full border-gray-300 text-gray-600 focus:border-accent focus:ring-accent rounded-md shadow-sm"
                     @input="form.avatar = $event.target.files[0]"
                     required
                     autofocus

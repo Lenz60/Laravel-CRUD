@@ -1,18 +1,36 @@
-<script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import DeleteUserForm from './Partials/DeleteUserForm.vue';
-import UpdatePasswordForm from './Partials/UpdatePasswordForm.vue';
-import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm.vue';
-import { Head } from '@inertiajs/vue3';
+<script>
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import DeleteUserForm from "./Partials/DeleteUserForm.vue";
+import UpdatePasswordForm from "./Partials/UpdatePasswordForm.vue";
+import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationForm.vue";
+import UpdateAvatar from "./Partials/UpdateAvatar.vue";
+import { Head } from "@inertiajs/vue3";
 
-defineProps({
-    mustVerifyEmail: {
-        type: Boolean,
+export default {
+    components: {
+        Head,
+        AuthenticatedLayout,
+        DeleteUserForm,
+        UpdatePasswordForm,
+        UpdateProfileInformationForm,
+        UpdateAvatar,
     },
-    status: {
-        type: String,
+    props: ["mustVerifyEmail", "status"],
+    setup() {
+        return {};
     },
-});
+    mounted() {
+        if (localStorage.getItem("reloaded")) {
+            // The page was just reloaded. Clear the value from local storage
+            // so that it will reload the next time this page is visited.
+            localStorage.removeItem("reloaded");
+        } else {
+            // Set a flag so that we know not to reload the page twice.
+            localStorage.setItem("reloaded", "1");
+            location.reload();
+        }
+    },
+};
 </script>
 
 <template>
@@ -20,11 +38,14 @@ defineProps({
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Profile</h2>
+            <h2 class="font-semibold text-xl leading-tight">Profile</h2>
         </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+                <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                    <UpdateAvatar class="max-w-xl" />
+                </div>
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                     <UpdateProfileInformationForm
                         :must-verify-email="mustVerifyEmail"
