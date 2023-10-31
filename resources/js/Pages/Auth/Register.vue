@@ -33,7 +33,7 @@ const submit = () => {
             <h1>Register Member</h1>
         </div>
 
-        <form @submit.prevent="submit">
+        <form @submit.prevent="submit" enctype="multipart/form-data">
             <div>
                 <InputLabel for="email" value="Email" />
 
@@ -61,7 +61,7 @@ const submit = () => {
                     autocomplete="ktp"
                 />
 
-                <InputError class="mt-2" :message="form.errors.name" />
+                <InputError class="mt-2" :message="form.errors.ktp" />
             </div>
             <div class="mt-4">
                 <InputLabel for="name" value="Name" />
@@ -127,7 +127,7 @@ const submit = () => {
                     autocomplete="telephone"
                 />
 
-                <InputError class="mt-2" :message="form.errors.name" />
+                <InputError class="mt-2" :message="form.errors.telephone" />
             </div>
             <div class="mt-4">
                 <InputLabel for="birth" value="Tanggal Lahir" />
@@ -159,7 +159,7 @@ const submit = () => {
                     />
                 </div>
 
-                <InputError class="mt-2" :message="form.errors.name" />
+                <InputError class="mt-2" :message="form.errors.birth" />
             </div>
 
             <div class="mt-4">
@@ -169,13 +169,13 @@ const submit = () => {
                     id="gender"
                     type="text"
                     class="mt-1 block w-full"
-                    v-model="form.name"
+                    v-model="form.gender"
                     required
                     autofocus
                     autocomplete="gender"
                 />
 
-                <InputError class="mt-2" :message="form.errors.name" />
+                <InputError class="mt-2" :message="form.errors.gender" />
             </div>
 
             <div class="mt-4">
@@ -185,13 +185,13 @@ const submit = () => {
                     id="avatar"
                     type="file"
                     class="mt-1 block w-ful"
-                    v-model="form.avatar"
+                    @input="form.avatar = $event.target.files[0]"
                     required
                     autofocus
-                    autocomplete="gender"
+                    autocomplete="avatar"
                 />
 
-                <InputError class="mt-2" :message="form.errors.name" />
+                <InputError class="mt-2" :message="form.errors.avatar" />
             </div>
             <div class="flex items-center justify-end mt-4">
                 <Link

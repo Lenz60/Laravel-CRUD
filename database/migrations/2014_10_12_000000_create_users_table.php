@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('telephone');
             $table->date('birth');
             $table->string('gender');
+            $table->string('avatar')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

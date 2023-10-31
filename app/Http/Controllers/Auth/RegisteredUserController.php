@@ -33,10 +33,29 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
-            'password' => ['required', 'confirmed', Password::defaults()],
+            'name' => 'required|string|max:255',
+            'password' => 'required|confirmed|min:5',
+            'avatar' => 'image|file|max:1024'
+
         ]);
+
+        // $image = $request->avatar;
+
+        // dd($request->file('avatar'));
+        // ddd($request);
+
+        // $data = [
+        //     'email' => $request->email,
+        //     'ktp' => $request->ktp,
+        //     'name' => $request->name,
+        //     'password' => Hash::make($request->password),
+        //     'telephone' => $request->telephone,
+        //     'birth' => $request->birth,
+        //     'gender' => $request->gender,
+        //     'avatar' => $request->file('avatar')->store('avatar'),
+        // ];
+        // // dd($data);
 
         $user = User::create([
             'email' => $request->email,
@@ -46,7 +65,9 @@ class RegisteredUserController extends Controller
             'telephone' => $request->telephone,
             'birth' => $request->birth,
             'gender' => $request->gender,
+            'avatar' => $request->file('avatar')->store('avatar'),
         ]);
+
 
         event(new Registered($user));
 
