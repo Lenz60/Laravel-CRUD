@@ -1,7 +1,25 @@
-<script setup>
+<script>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head } from "@inertiajs/vue3";
+import { Head, usePage } from "@inertiajs/vue3";
+
+export default {
+    components: {
+        Head,
+        usePage,
+        AuthenticatedLayout,
+    },
+    setup() {
+        const user = usePage().props.auth.user;
+        const date = new Date(user.created_at);
+        const convertedDate = date.toDateString();
+
+        // const formatedDate = date("d F Y", user.created_at);
+        return { convertedDate };
+    },
+};
 </script>
+
+<style lang="scss" scoped></style>
 
 <template>
     <Head title="Dashboard" />
@@ -16,6 +34,11 @@ import { Head } from "@inertiajs/vue3";
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
                         Halo {{ $page.props.auth.user.name }}
+                    </div>
+                    <div>
+                        <p class="p-6 text-gray-900">
+                            Anda terdaftar pada {{ convertedDate }}
+                        </p>
                     </div>
                 </div>
             </div>
