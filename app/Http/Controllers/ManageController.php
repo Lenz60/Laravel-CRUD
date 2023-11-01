@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Inertia\Inertia;
+use App\Models\Admin;
 use Inertia\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\ProfileUpdateRequest;
-use App\Models\User;
 
 class ManageController extends Controller
 {
@@ -29,7 +31,7 @@ class ManageController extends Controller
         // $string = 'stering';
         // dd($data);
         // dd($user);
-        return inertia('Manage/Manage', compact('data'));
+        return inertia('Admin/Manage', compact('data'));
     }
 
     /**
@@ -50,30 +52,6 @@ class ManageController extends Controller
         $request->user()->save();
 
         return Redirect::route('profile.edit');
-    }
-    /**
-     * Update the user's profile information.
-     */
-    public function updateAvatar(ProfileUpdateRequest $request)
-    {
-        $request->user()->fill($request->validated());
-        // dd($request->file('avatar'));
-
-        $newAvatar = $request->file('avatar')->store('avatar');
-
-        // dd($newAvatar);
-        // dd($request->user()->id);
-
-        $user = User::find($request->user()->id);
-        $user->avatar = $newAvatar;
-        $user->update();
-
-        // dd($request->user()->avatar($newAvatar));
-        // $request
-        // $request->user()->avatar()->save($newAvatar);
-        // $request->user()->save();
-
-        return redirect()->to('profile');
     }
 
 
@@ -97,5 +75,36 @@ class ManageController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function addAdminView(){
+
+        $user = Admin::all();
+        $user->except('password');
+        foreach($user as $users){
+            $data[] = $users->toArray();
+        }
+        return inertia('Admin/Add', compact('data'));
+    }
+
+    public function addAdmin(Request $request){
+        // dd($request->all());
+
+        $request->validate([
+            'username' => 'required|string|unique:'.Admin::class,
+            'name' => 'required|string|max:255',
+            'password' => 'required|min:5',
+
+        ]);
+
+        $admin = Admin::create([
+                    'username' => $request->username,
+                    'name' => $request->name,
+                    'password' => Hash::make($request->password)
+                ]);
+        $admin->fill($request->validated());
+
+
+        // dd($admin);
     }
 }

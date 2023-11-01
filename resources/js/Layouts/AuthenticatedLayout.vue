@@ -56,6 +56,17 @@ export default {
                                     >
                                         Manage
                                     </NavLink>
+                                    <NavLink
+                                        class="text-white ml-5"
+                                        :href="route('admin.add.admin.view')"
+                                        :active="
+                                            route().current(
+                                                'admin.add.admin.view'
+                                            )
+                                        "
+                                    >
+                                        Add Admin Accounts
+                                    </NavLink>
                                 </div>
                                 <div v-else>
                                     <NavLink

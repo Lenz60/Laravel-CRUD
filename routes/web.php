@@ -69,7 +69,7 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::delete('/admin/profile', [AdminProfileController::class, 'destroy'])->name('admin.profile.destroy');
 
     // Add Admin Routes
-    Route::get('/admin/add', [AdminProfileController::class, 'addAdminView'])->name('admin.add.admin.view');
-    Route::post('/admin/add', [AdminProfileController::class, 'addAdmin'])->name('admin.add.admin.create');
+    Route::get('/admin/add', [ManageController::class, 'addAdminView'])->name('admin.add.admin.view');
+    Route::post('/admin/add', [ManageController::class, 'addAdmin'])->name('admin.add.admin.create');
 });
 require __DIR__.'/auth.php';
