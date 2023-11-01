@@ -24,13 +24,13 @@ class LoginRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
-    public function rules(): array
-    {
-        return [
-            'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string'],
-        ];
-    }
+    // public function rules(): array
+    // {
+    //     return [
+    //         'email' => ['required', 'string', 'email'],
+    //         'password' => ['required', 'string'],
+    //     ];
+    // }
 
     /**
      * Attempt to authenticate the request's credentials.
@@ -39,17 +39,45 @@ class LoginRequest extends FormRequest
      */
     public function authenticate(): void
     {
-        $this->ensureIsNotRateLimited();
+        // dd($this->username);
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
-            RateLimiter::hit($this->throttleKey());
+        if(isset($this->username)){
+            $this->ensureIsNotRateLimited();
+            // dd(Auth::guard('admin')->attempt($this->only(['username','password']),$this->boolean('remember')));
+            // dd($this->username);
+            if(! Auth::guard('admin')->attempt($this->only(['username','password']),$this->boolean('remember'))){
+                RateLimiter::hit($this->throttleKey());
+                throw ValidationException::withMessages([
+                    'username' => trans('auth.failed'),
+                ]);
+            }
+        }else{
+            $this->ensureIsNotRateLimited();
 
-            throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
-            ]);
+
+            if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+                RateLimiter::hit($this->throttleKey());
+                throw ValidationException::withMessages([
+                    'email' => trans('auth.failed'),
+                ]);
+            }
+
         }
 
+
+
         RateLimiter::clear($this->throttleKey());
+    }
+
+    public function authenticateAdmin():void {
+        dd($this->all());
+        if(! Auth::guard('admin')->attempt($this->only(['username','password']),$this->boolean('remember'))){
+            // RateLimiter::hit($this->throttleKey());
+            // throw ValidationException::withMessages([
+            //     'username' => trans('auth.failed'),
+            // ]);
+        }
+
     }
 
     /**
