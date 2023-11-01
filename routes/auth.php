@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\AdminController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
@@ -19,10 +19,10 @@ Route::middleware('guest')->group(function () {
     Route::post('register', [RegisteredUserController::class, 'store']);
 
 
-    Route::post('admin', [AdminController::class, 'store'])->name('loginAdmin.auth');
+    Route::post('admin', [AdminController::class, 'store'])->name('admin.login.auth');
 
     Route::get('admin', [AdminController::class, 'create'])
-    ->name('loginAdmin');
+    ->name('admin.login');
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
                 ->name('login');
@@ -63,4 +63,15 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
+
+});
+
+Route::middleware('auth:admin')->group(function(){
+    Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
+                ->name('password.confirm');
+
+    Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
+    Route::put('password', [PasswordController::class, 'update'])->name('password.update');
+    Route::post('admin/logout', [AdminController::class, 'destroy'])
+                ->name('admin.logout');
 });

@@ -23,7 +23,10 @@ class ProfileUpdateRequest extends FormRequest
             'telephone' => ['integer'],
             'birth' => ['date'],
             'gender' => ['string'],
-            'avatar' => ['image','file','max:1024']
+            'avatar' => ['image','file','max:1024'],
+
+            //Admin
+            'username' => ['string'],
         ];
     }
 }

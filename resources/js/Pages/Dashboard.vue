@@ -24,7 +24,7 @@ export default {
 <template>
     <Head title="Dashboard" />
 
-    <AuthenticatedLayout>
+    <AuthenticatedLayout Role="Member">
         <template #header>
             <h2 class="font-semibold text-xl leading-tight">Dashboard</h2>
         </template>

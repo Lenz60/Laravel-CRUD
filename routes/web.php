@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AdminProfileController;
+use App\Http\Controllers\ManageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -54,4 +56,20 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::middleware(['auth:admin'])->group(function () {
+    // Admin Manage Routes
+    Route::get('/admin/manage', [ManageController::class, 'edit'])->name('manage.edit');
+    Route::patch('/admin/manage', [ManageController::class, 'update'])->name('manage.update');
+    Route::post('/admin/manage', [ManageController::class, 'updateAvatar'])->name('manage.add.member');
+    Route::delete('/admin/manage', [ManageController::class, 'destroy'])->name('manage.destroy.member');
+
+    // Admin Profile Routes
+    Route::get('/admin/profile', [AdminProfileController::class, 'edit'])->name('admin.profile.edit');
+    Route::patch('/admin/profile', [AdminProfileController::class, 'update'])->name('admin.profile.update');
+    Route::delete('/admin/profile', [AdminProfileController::class, 'destroy'])->name('admin.profile.destroy');
+
+    // Add Admin Routes
+    Route::get('/admin/add', [AdminProfileController::class, 'addAdminView'])->name('admin.add.admin.view');
+    Route::post('/admin/add', [AdminProfileController::class, 'addAdmin'])->name('admin.add.admin.create');
+});
 require __DIR__.'/auth.php';

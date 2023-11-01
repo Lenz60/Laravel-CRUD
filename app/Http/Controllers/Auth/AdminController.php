@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
@@ -17,11 +17,11 @@ use Inertia\Response;
 class AdminController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-        $this->middleware('guest:admin')->except('logout');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('guest')->except('admin.logout');
+    //     $this->middleware('guest:admin')->except('admin.logout');
+    // }
     //
     /**
      * Display the login view.
@@ -46,25 +46,6 @@ class AdminController extends Controller
 
         return redirect()->intended(RouteServiceProvider::ADMIN);
 
-        // // dd($request);
-        // $admin = Admin::find($request->username);
-
-        // if($admin){
-        //     $data = $admin->where('username', $request->username)->get()->first();
-        //     if($data){
-        //         // dd($data);
-        //         $payload = [
-        //             'username'=>$data->username,
-        //             'name' => $data->name,
-        //         ];
-        //         $token = JWT::encode($payload, config('app.jwt_key'),'HS256');
-        //         setcookie('userData', $token);
-        //     }
-        //     $request->session()->regenerate();
-
-        //     return redirect()->intended(RouteServiceProvider::ADMIN);
-        // }
-
 
 
     }
@@ -83,13 +64,4 @@ class AdminController extends Controller
         return redirect('/');
     }
 
-    public function authenticate($username, $password){
-        if (! Auth::attempt($this->only('username', 'password'), $this->boolean('remember'))) {
-                RateLimiter::hit($this->throttleKey());
-
-                // throw ValidationException::withMessages([
-                //     'username' => trans('auth.failed'),
-                // ]);
-            }
-    }
 }
