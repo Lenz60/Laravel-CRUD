@@ -9,6 +9,7 @@ use Inertia\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\ProfileUpdateRequest;
 
@@ -56,13 +57,32 @@ class ManageController extends Controller
 
         // $user->save();
 
+        return Redirect::route('manage.edit');
+    }
 
+    public function addMember(Request $request){
 
+        // dd($request->all());
+        $request->validate([
+            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
+            'name' => 'required|string|max:255',
+            'password' => 'required|confirmed|min:5',
+            'avatar' => 'image|file|max:1024'
 
+        ]);
 
+         $user = User::create([
+            'email' => $request->email,
+            'ktp' => $request->ktp,
+            'name' => $request->name,
+            'password' => Hash::make($request->password),
+            'telephone' => $request->telephone,
+            'birth' => $request->birth,
+            'gender' => $request->gender,
+            'avatar' => $request->file('avatar')->store('avatar'),
+        ]);
 
-
-        // $request->user()->save();
+        event(new Registered($user));
 
         return Redirect::route('manage.edit');
     }

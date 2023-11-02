@@ -1,5 +1,5 @@
 <template>
-    <Head title="Dashboard" />
+    <Head title="Add Admin" />
 
     <AuthenticatedLayout Role="Admin">
         <template #header>

@@ -60,7 +60,7 @@ Route::middleware(['auth:admin'])->group(function () {
     // Admin Manage Routes
     Route::get('/admin/manage', [ManageController::class, 'edit'])->name('manage.edit');
     Route::patch('/admin/manage', [ManageController::class, 'update'])->name('manage.update');
-    Route::post('/admin/manage', [ManageController::class, 'updateAvatar'])->name('manage.add.member');
+    Route::post('/admin/manage', [ManageController::class, 'addMember'])->name('manage.add.member');
     Route::delete('/admin/manage', [ManageController::class, 'destroy'])->name('manage.destroy.member');
 
     // Admin Profile Routes
