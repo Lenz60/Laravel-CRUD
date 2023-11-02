@@ -22,6 +22,12 @@ const user = usePage().props.auth.user;
 const form = useForm({
     username: user.username,
     name: user.name,
+    email: user.email,
+    avatar: user.avatar,
+    ktp: user.ktp,
+    telephone: user.telephone,
+    gender: user.gender,
+    birth: user.birth,
 });
 </script>
 
