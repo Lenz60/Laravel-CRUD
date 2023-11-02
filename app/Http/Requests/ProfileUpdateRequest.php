@@ -15,18 +15,38 @@ class ProfileUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => ['string', 'max:255'],
-            // 'email' => ['string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->email)],
-            'email' => ['string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
-            'ktp' => ['integer'],
-            'telephone' => ['integer'],
-            'birth' => ['date'],
-            'gender' => ['string'],
-            'avatar' => ['image','file','max:1024'],
+        // dd($this->all());
+        // dd($this->user()->username);
+        if($this->user()->username){
+            return [
+                'name' => ['string', 'max:255'],
+                // 'email' => ['string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->email)],
+                'email' => ['string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->id)],
+                'ktp' => ['integer'],
+                'telephone' => ['integer'],
+                'birth' => ['date'],
+                'gender' => ['string'],
+                'avatar' => ['image','file','max:1024'],
 
-            //Admin
-            'username' => ['string'],
-        ];
+                //Admin
+                'username' => ['string'],
+            ];
+
+        }else{
+            return [
+                'name' => ['string', 'max:255'],
+                // 'email' => ['string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->email)],
+                'email' => ['string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
+                'ktp' => ['integer'],
+                'telephone' => ['integer'],
+                'birth' => ['date'],
+                'gender' => ['string'],
+                'avatar' => ['image','file','max:1024'],
+
+                //Admin
+                'username' => ['string'],
+            ];
+
+        }
     }
 }

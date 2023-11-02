@@ -39,19 +39,32 @@ class ManageController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
-        // dd($request->file());
+        // $request->user()->fill($request->validated());
+        // dd($request->all());
+        $user = User::find($request->id);
 
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($user) {
+            $user->update($request->only(['name', 'email', 'ktp', 'telephone', 'gender', 'birth']));
         }
 
+        // $user->name = $request->name;
+        // $user->email = $request->email;
+        // $user->ktp = $request->ktp;
+        // $user->telephone = $request->telephone;
+        // $user->gender = $request->gender;
+        // $user->birth = $request->birth;
+
+        // $user->save();
 
 
-        $request->user()->save();
 
-        return Redirect::route('profile.edit');
+
+
+
+
+        // $request->user()->save();
+
+        return Redirect::route('manage.edit');
     }
 
 
