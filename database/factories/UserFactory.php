@@ -25,7 +25,7 @@ class UserFactory extends Factory
             'password' => 'password', // password
             'telephone' => fake()->phoneNumber(),
             'birth' => fake()->date(),
-            'gender' => fake()->text(5),
+            'gender' => fake()->randomElement('Laki-laki', 'Perempuan'),
             'avatar' => null,
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),
