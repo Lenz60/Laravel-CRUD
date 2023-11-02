@@ -71,5 +71,8 @@ Route::middleware(['auth:admin'])->group(function () {
     // Add Admin Routes
     Route::get('/admin/add', [ManageController::class, 'addAdminView'])->name('admin.add.admin.view');
     Route::post('/admin/add', [ManageController::class, 'addAdmin'])->name('admin.add.admin.create');
+
+    //Member Json
+    Route::get('/admin/memberjson', [ManageController::class, 'jsonMember'])->name('admin.member.json');
 });
 require __DIR__.'/auth.php';

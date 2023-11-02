@@ -94,20 +94,13 @@ class ManageController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        $request->validate([
-            'password' => ['required', 'current_password'],
-        ]);
+        // dd($request->all());
+        $user = User::find($request->id);
 
-        $user = $request->user();
-
-        Auth::logout();
-
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/');
+        if($user){
+            $user->delete();
+        }
+        return Redirect::route('manage.edit');
     }
 
     public function addAdminView(){
@@ -140,4 +133,18 @@ class ManageController extends Controller
 
         // dd($admin);
     }
+
+    public function jsonMember(){
+        $user = User::all();
+        $user->except('password');
+        foreach($user as $users){
+            $data[] = $users->toArray();
+        }
+        $encodedJson = json_encode($data);
+        // dd($encodedJson);
+        return inertia('Admin/MemberJson', compact('encodedJson'));
+
+    }
+
+
 }

@@ -67,6 +67,15 @@ export default {
                                     >
                                         Add Admin Accounts
                                     </NavLink>
+                                    <NavLink
+                                        class="text-white ml-5"
+                                        :href="route('admin.member.json')"
+                                        :active="
+                                            route().current('admin.member.json')
+                                        "
+                                    >
+                                        List Member Json
+                                    </NavLink>
                                 </div>
                                 <div v-else>
                                     <NavLink

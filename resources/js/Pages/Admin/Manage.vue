@@ -46,6 +46,16 @@
                                             Edit
                                         </button>
                                     </td>
+                                    <td>
+                                        <button
+                                            @click="
+                                                clickDelete({ id: member.id })
+                                            "
+                                            class="btn btn-outline btn-error rounded-md"
+                                        >
+                                            Delete
+                                        </button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -315,14 +325,14 @@
 </template>
 
 <script>
-import { useForm } from "@inertiajs/vue3";
+import { useForm, Head } from "@inertiajs/vue3";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import ModalEdit from "./Modal/ModalEdit.vue";
-import { Head } from "@inertiajs/vue3";
+import Swal from "sweetalert2";
 import { ref } from "vue";
 export default {
     props: ["data", "string"],
@@ -379,6 +389,27 @@ export default {
         submit() {
             this.form.post(route("manage.add.member"), {
                 onFinish: () => this.$refs.adminMemberForm.reset(),
+            });
+        },
+        clickDelete(data) {
+            Swal.fire({
+                title: "Apakah anda ingin menghapus data member?",
+                text: "Data yang dihapus akan hilang selamanya",
+                icon: "warning",
+                reverseButtons: true,
+                showCancelButton: true,
+                confirmButtonColor: "#1DB9AC",
+                cancelButtonColor: "#F87272",
+                confirmButtonText: "Hapus",
+                cancelButtonText: "Batal",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.$inertia.delete(
+                        this.route("manage.destroy.member", data)
+                    );
+                    Swal.fire("Data dihapus!", "Data telah dihapus", "success");
+                } else {
+                }
             });
         },
     },
