@@ -38,7 +38,6 @@ const form = useForm({
                 <h2 class="text-lg font-medium text-gray-900">
                     Informasi Profil
                 </h2>
-                <p>{{ $page.props.auth.user }}</p>
 
                 <p class="mt-1 text-sm text-gray-600">
                     Update informasi akun member.
